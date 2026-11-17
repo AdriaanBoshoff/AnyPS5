@@ -1,0 +1,5 @@
+# libSceAgc
+
+## add Unknown function info
+
+- [sceAgcCbBranch](../../../core/libs/prx/libSceAgc/Cb/src/Branch.cpp) (libSceAgc) - the mode is masked to 2 bits, the compare function to 3 bits and, when the compare function is not 0, the low 3 bits of the compare address are cleared, as [prosper's console measurements](https://github.com/mattias800/prosper/blob/d44c89db977a162af271d986a8d1febbc31e702f/prosper/tests/data/console_oracle/agcbuild.golden.tsv) (captured 2026-10-08) show for the modes 0x11, 1 and 0x22, the compare functions 0x22, 2 and 0x44 and the addresses 0x33333333, 3 and 0. Those measurements fit clearing the low 2, 3 or 4 address bits; 3 is taken to match the 8-byte alignment `sceAgcBranchPatchSetCompareAddress` checks. Only compare functions 2 and 4 were measured, so whether the console also clears the address for compare function 0 is not known, and it is passed through. The cache policies, targets and sizes come from the stack and are not measured; they are still checked.
